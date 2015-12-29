@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
+set -x
 
 export
 : ${TRANSCRYPT_CMD:?Please run the following: heroku config:set TRANSCRYPT_CMD='"''$(transcrypt -d | grep "transcrypt -c" | sed '"'"'s/^  //'"'"')''"'}
