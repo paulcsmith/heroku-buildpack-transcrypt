@@ -4,17 +4,12 @@
 build_dir=$1
 cache_dir=$2
 
-echo $RECEIVE_DATA
-echo $RECEIVE_DATA | bin/jq -r .push_metadata.env.TRANSCRYPT_CMD
-
 TRANSCRYPT_CMD=$(echo $RECEIVE_DATA | bin/jq -r .push_metadata.env.TRANSCRYPT_CMD)
-echo $TRANSCRYPT_CMD
-
 : ${TRANSCRYPT_CMD:?Please run the following: heroku config:set TRANSCRYPT_CMD='"''$(transcrypt -d | grep "transcrypt -c" | sed '"'"'s/^  //'"'"')''"'}
 
-mkdir $cache_dir || true
+mkdir -p $cache_dir
 pushd $cache_dir
-git clone https://github.com/elasticdog/transcrypt.git
+git clone --quiet https://github.com/elasticdog/transcrypt.git || true
 popd
 
 pushd $build_dir
@@ -24,18 +19,6 @@ git init .
 # Install transcrypt, its helper utils, and password/cipher
 eval $cache_dir/transcrypt/$TRANSCRYPT_CMD -y
 
-cipher=$(git config --get --local transcrypt.cipher)
-password=$(git config --get --local transcrypt.password)
-
-echo "-----> cipher: $cipher"
-echo "-----> password: $password"
-
-echo "App.json:"
-cat app.json
-
-echo "App.json decrypt"
-cat app.json | .git/crypt/smudge
-
 # Decrypt the encrypted files
 cat .gitattributes | \
 grep "filter=crypt diff=crypt" | \
@@ -43,7 +26,6 @@ grep -v "^#" | \
 sed 's/filter=crypt diff=crypt//;s/ //g' | \
 tr '\n' '\0' | \
 xargs -0 -I{} sh -c "echo '-----> Decrypting {}'; cat {} | .git/crypt/smudge > {}.dec && mv {}.dec {}"
-
-echo "App.json:"
-cat app.json
 popd
+
+echo "-----> All transcrypted files decrypted!"
