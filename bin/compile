@@ -33,6 +33,9 @@ echo "-----> password: $password"
 echo "App.json:"
 cat app.json
 
+echo "App.json decrypt"
+cat app.json | .git/crypt/smudge
+
 # Decrypt the encrypted files
 cat .gitattributes | \
 grep "filter=crypt diff=crypt" | \
