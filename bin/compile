@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+build_dir=$1
+cache_dir=$2
+
+: ${TRANSCRYPT_CMD:?Please run the following: heroku config:set TRANSCRYPT_CMD='"''$(transcrypt -d | grep "transcrypt -c" | sed '"'"'s/^  //'"'"')''"'}
+
+pushd $cache_dir
+git clone https://github.com/elasticdog/transcrypt.git
+popd
+
+pushd $build_dir
+$cache_dir/bin/$TRANSCRYPT_CMD
+popd

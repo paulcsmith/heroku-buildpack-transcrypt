@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# bin/detect <build-dir>
+
+: ${TRANSCRYPT_CMD:?"Please run transcrypt -d and put it into heroku config:set TRANSCRYPT_CMD='<output of cmd>'"}
+
+echo "transcrypt"
+exit 0
