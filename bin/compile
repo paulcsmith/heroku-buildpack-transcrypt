@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 # set -x
+TRANSCRYPT_CMD=$(echo $RECEIVE_DATA | bin/jq -r .push_metadata.env.TRANSCRYPT_CMD)
+: ${TRANSCRYPT_CMD:?Please run the following: heroku config:set TRANSCRYPT_CMD='"''$(transcrypt -d | grep "transcrypt -c" | sed '"'"'s/^  //'"'"')''"'}
+
 build_dir=$1
 cache_dir=$2
 
-TRANSCRYPT_CMD=$(echo $RECEIVE_DATA | bin/jq -r .push_metadata.env.TRANSCRYPT_CMD)
-: ${TRANSCRYPT_CMD:?Please run the following: heroku config:set TRANSCRYPT_CMD='"''$(transcrypt -d | grep "transcrypt -c" | sed '"'"'s/^  //'"'"')''"'}
+pushd () {
+    command pushd "$@" > /dev/null
+}
+
+popd () {
+    command popd "$@" > /dev/null
+}
 
 mkdir -p $cache_dir
 pushd $cache_dir
