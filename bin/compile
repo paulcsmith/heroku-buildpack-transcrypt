@@ -22,7 +22,7 @@ pushd $build_dir
 git init .
 
 # Install transcrypt, its helper utils, and password/cipher
-$cache_dir/transcrypt/$TRANSCRYPT_CMD -y
+eval $cache_dir/transcrypt/$TRANSCRYPT_CMD -y
 
 cipher=$(git config --get --local transcrypt.cipher)
 password=$(git config --get --local transcrypt.password)
