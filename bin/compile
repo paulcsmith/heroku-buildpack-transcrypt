@@ -22,7 +22,8 @@ $cache_dir/transcrypt/$TRANSCRYPT_CMD -y
 # Decrypt the encrypted files
 cat .gitattributes | \
 grep "filter=crypt diff=crypt" | \
+grep -v "^#" | \
 sed 's/filter=crypt diff=crypt//;s/ //g' | \
 tr '\n' '\0' | \
-xargs -0 -I{} sh -c "echo -----> Decrypting {}; cat {} | .git/crypt/smudge > {}"
+xargs -0 -I{} sh -c "echo '-----> Decrypting {}'; cat {} | .git/crypt/smudge > {}"
 popd
