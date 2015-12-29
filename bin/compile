@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
-set -x
+# set -x
 build_dir=$1
 cache_dir=$2
 
@@ -19,6 +19,15 @@ git init .
 # Install transcrypt, its helper utils, and password/cipher
 $cache_dir/transcrypt/$TRANSCRYPT_CMD -y
 
+cipher=$(git config --get --local transcrypt.cipher)
+password=$(git config --get --local transcrypt.password)
+
+echo "-----> cipher: $cipher"
+echo "-----> password: $password"
+
+echo "App.json:"
+cat app.json
+
 # Decrypt the encrypted files
 cat .gitattributes | \
 grep "filter=crypt diff=crypt" | \
@@ -27,6 +36,6 @@ sed 's/filter=crypt diff=crypt//;s/ //g' | \
 tr '\n' '\0' | \
 xargs -0 -I{} sh -c "echo '-----> Decrypting {}'; cat {} | .git/crypt/smudge > {}"
 
-echo $(ls -la app.json)
-echo $(cat app.json)
+echo "App.json:"
+cat app.json
 popd
