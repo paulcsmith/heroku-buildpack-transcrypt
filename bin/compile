@@ -13,5 +13,5 @@ git clone https://github.com/elasticdog/transcrypt.git
 popd
 
 pushd $build_dir
-$cache_dir/transcrypt/bin/$TRANSCRYPT_CMD
+$cache_dir/transcrypt/$TRANSCRYPT_CMD
 popd
