@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
-set -x
-
-echo $TRANSCRYPT_CMD
-: ${TRANSCRYPT_CMD:?Please run the following: heroku config:set TRANSCRYPT_CMD='"''$(transcrypt -d | grep "transcrypt -c" | sed '"'"'s/^  //'"'"')''"'}
-
 echo "transcrypt"
 exit 0

@@ -4,7 +4,7 @@ set -x
 build_dir=$1
 cache_dir=$2
 
-printenv
+echo $(printenv)
 : ${TRANSCRYPT_CMD:?Please run the following: heroku config:set TRANSCRYPT_CMD='"''$(transcrypt -d | grep "transcrypt -c" | sed '"'"'s/^  //'"'"')''"'}
 
 pushd $cache_dir
