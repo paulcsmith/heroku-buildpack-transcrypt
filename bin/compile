@@ -17,7 +17,14 @@ popd () {
 
 mkdir -p $cache_dir
 pushd $cache_dir
-git clone --quiet https://github.com/elasticdog/transcrypt.git || true
+if [ -d "transcrypt" ]; then
+  pushd transcrypt
+  git fetch --quiet
+  git pull --quiet
+  popd
+else
+  git clone --quiet https://github.com/elasticdog/transcrypt.git
+fi
 popd
 
 pushd $build_dir
