@@ -3,7 +3,7 @@
 build_dir=$1
 cache_dir=$2
 
-echo $RECEIVE_DATA
+TRANSCRYPT_CMD=$(echo "$RECEIVE_DATA" | bin/JSON.sh -l | grep TRANSCRYPT_CMD | sed 's/.*"transcrypt/transcrypt/;s/"//')
 : ${TRANSCRYPT_CMD:?Please run the following: heroku config:set TRANSCRYPT_CMD='"''$(transcrypt -d | grep "transcrypt -c" | sed '"'"'s/^  //'"'"')''"'}
 
 pushd $cache_dir
