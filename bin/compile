@@ -29,10 +29,10 @@ popd
 
 pushd $build_dir
 # It doesn't have git, so initialize
-git init .
+git init . --quiet
 
 # Install transcrypt, its helper utils, and password/cipher
-eval $cache_dir/transcrypt/$TRANSCRYPT_CMD -y
+eval $cache_dir/transcrypt/$TRANSCRYPT_CMD -y > /dev/null
 
 # Decrypt the encrypted files
 cat .gitattributes | \
