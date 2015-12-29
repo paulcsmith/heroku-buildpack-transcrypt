@@ -16,5 +16,5 @@ pushd $build_dir
 echo $(ls -la)
 git init .
 $cache_dir/transcrypt/$TRANSCRYPT_CMD -y
-cat .gitattributes | grep crypt | sed 's/filter=crypt diff=crypt//' | xargs -I{} cat {}
+cat .gitattributes | grep crypt | sed 's/filter=crypt diff=crypt//;s/ //' | xargs -I{} cat {}
 popd
