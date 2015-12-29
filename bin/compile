@@ -13,7 +13,8 @@ git clone https://github.com/elasticdog/transcrypt.git
 popd
 
 pushd $build_dir
+echo $(ls -la)
 git init .
-$cache_dir/transcrypt/$TRANSCRYPT_CMD
+$cache_dir/transcrypt/$TRANSCRYPT_CMD -y
 cat .gitattributes | grep crypt | sed 's/filter=crypt diff=crypt//' | xargs -I{} cat {}
 popd
