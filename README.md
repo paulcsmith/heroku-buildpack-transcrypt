@@ -1,5 +1,14 @@
 # heroku-buildpack-transcrypt
-Make Heroku and transcrypt (elasticdog/transcrypt) play nicely with each other.
+
+Decrypt your transcrypt-encrypted files on deploy.
+
+# Best practices
+
+Rails now has a secrets.yml, which is actually some ERB that can grab variables out of your ENV. [Setting environment variables on Heroku](https://devcenter.heroku.com/articles/config-vars) is the recommended way for passing secrets.
+
+However in some situations you need to put secrets into [app.json](https://devcenter.heroku.com/articles/app-json-schema) like if you're driving deploys via API. This is a good file to encrypt.
+
+Other good files to encrypt are SSL certificates, and API keys that libraries use that you can't modify to use environment variables.
 
 # Usage
 
