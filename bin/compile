@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
-# set -x
+
+set -x
+
 if [[ -z "$TRANSCRYPT_CMD" ]]; then
     TRANSCRYPT_CMD=$(echo $RECEIVE_DATA | bin/jq -r .push_metadata.env.TRANSCRYPT_CMD)
     : ${TRANSCRYPT_CMD:?Please run the following: heroku config:set TRANSCRYPT_CMD='"''$(transcrypt -d | grep "transcrypt -c" | sed '"'"'s/^  //'"'"')''"'}
