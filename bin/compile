@@ -1,50 +1,42 @@
-#!/usr/bin/env bash
+#!/bin/bash -e
 # bin/compile <build-dir> <cache-dir>
 
-set -x
+# Exit if any subcommand fails
+set -e
 
-if [[ -z "$TRANSCRYPT_CMD" ]]; then
-    TRANSCRYPT_CMD=$(echo $RECEIVE_DATA | bin/jq -r .push_metadata.env.TRANSCRYPT_CMD)
-    : ${TRANSCRYPT_CMD:?Please run the following: heroku config:set TRANSCRYPT_CMD='"''$(transcrypt -d | grep "transcrypt -c" | sed '"'"'s/^  //'"'"')''"'}
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+CURRENT_DIR=$PWD
+
+TRANSCRYPT_ENV_FILE="$ENV_DIR/TRANSCRYPT_CMD"
+
+if [ ! -f $TRANSCRYPT_ENV_FILE ]; then
+    printf "\n-----> ERROR: Please set TRANSCRYPT_CMD. You can get the command by running in your project directory: transcrypt --display \n\n"
+    exit 1
 fi
 
-build_dir=$1
-cache_dir=$2
+TRANSCRYPT_CMD=$(cat $TRANSCRYPT_ENV_FILE)
 
-pushd () {
-    command pushd "$@" > /dev/null
-}
+printf "\n-----> Successfully retrieved TRANSCRYPT_CMD from ENV var"
 
-popd () {
-    command popd "$@" > /dev/null
-}
-
-mkdir -p $cache_dir
-pushd $cache_dir
+mkdir -p $CACHE_DIR
+cd $CACHE_DIR
 if [ -d "transcrypt" ]; then
-  pushd transcrypt
-  git fetch --quiet
-  git pull --quiet
-  popd
+    cd transcrypt
+    git fetch --quiet
+    git pull --quiet
 else
-  git clone --quiet https://github.com/elasticdog/transcrypt.git
+    git clone --quiet https://github.com/elasticdog/transcrypt.git
 fi
-popd
 
-pushd $build_dir
+cd $BUILD_DIR
 # It doesn't have git, so initialize
 git init . --quiet
 
 # Install transcrypt, its helper utils, and password/cipher
-eval $cache_dir/transcrypt/$TRANSCRYPT_CMD -y > /dev/null
+printf "\n-----> Installing and configuring transcrypt\n\n"
+cd $CURRENT_DIR
+eval $CACHE_DIR/transcrypt/$TRANSCRYPT_CMD -y
 
-# Decrypt the encrypted files
-cat .gitattributes | \
-grep "filter=crypt diff=crypt" | \
-grep -v "^#" | \
-sed 's/filter=crypt diff=crypt//;s/ //g' | \
-tr '\n' '\0' | \
-xargs -0 -I{} sh -c "echo '-----> Decrypting {}'; cat {} | .git/crypt/smudge > {}.dec && mv {}.dec {}"
-popd
-
-echo "-----> All transcrypted files decrypted!"
+printf "\n-----> All transcrypted files decrypted!\n\n"
