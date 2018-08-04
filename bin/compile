@@ -39,10 +39,11 @@ git config --global user.email "foo@bar.com"
 git config --global user.name "Foo Bar"
 git add -A
 git commit -m "Init"
+printf "\n-----> Status \n\n"
+git status
 
 # Install transcrypt, its helper utils, and password/cipher
 printf "\n-----> Installing and configuring transcrypt\n\n"
-
 $CACHE_DIR/transcrypt/$TRANSCRYPT_CMD
 
 printf "\n-----> ls-crypt\n\n"
