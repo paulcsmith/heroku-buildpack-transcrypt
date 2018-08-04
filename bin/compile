@@ -3,6 +3,7 @@
 
 # Exit if any subcommand fails
 set -e
+set -o pipefail
 
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -40,9 +41,7 @@ git init . --quiet
 printf "\n-----> Installing and configuring transcrypt\n\n"
 # Seems like it is not using the right cipher? Or maybe the salt is wrong??
 # Check into the salts
-$CACHE_DIR/transcrypt/$TRANSCRYPT_CMD
-
-set -x
+$CACHE_DIR/transcrypt/$TRANSCRYPT_CMD -y
 
 cat .gitattributes | \
 grep "filter=crypt diff=crypt" | \
