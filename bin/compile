@@ -47,12 +47,9 @@ cat .gitattributes | \
 grep "filter=crypt diff=crypt" | \
 grep -v "^#" | \
 sed 's/filter=crypt diff=crypt//;s/ //g' | \
-echo | \
-xargs -0 -I file find . -name file | \
-echo | \
-xargs -0 -I file .git/crypt/smudge file | \
-echo
-# xargs .git/crypt/smudge > {}.dec && mv {}.dec {}
+tr '\n' '\0' | \
+xargs -0 -I {} find . -name {} | \
+xargs -0 -I {} .git/crypt/smudge > {}.dec && mv {}.dec {}
 
 
 printf "\n-----> ls-crypt\n\n"
