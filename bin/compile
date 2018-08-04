@@ -49,8 +49,9 @@ grep -v "^#" | \
 sed 's/filter=crypt diff=crypt//;s/ //g' | \
 tr '\n' '\0' | \
 xargs -0 -I {} find . -name {} | \
-xargs -0 -I {} .git/crypt/smudge > {}.dec && mv {}.dec {}
-
+while read file; do
+  git/crypt/smudge > $file.dec && mv $file.dec $file
+done
 
 printf "\n-----> ls-crypt\n\n"
 git ls-crypt
