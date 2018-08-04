@@ -31,6 +31,8 @@ else
 fi
 
 cd $BUILD_DIR
+ls
+exit 1
 
 # It doesn't have git, so initialize
 printf "\n-----> Setting up git repo for transcrypt\n\n"
