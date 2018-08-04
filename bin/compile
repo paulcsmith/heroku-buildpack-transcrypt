@@ -52,6 +52,7 @@ set -x
 git stash save
 rm .git/index
 git checkout HEAD -- "$(git rev-parse --show-toplevel)"
+cat config/slack.enc.cr
 git stash pop
 
 printf "\n-----> ls-crypt\n\n"
