@@ -34,6 +34,7 @@ cd $BUILD_DIR
 
 # It doesn't have git, so initialize
 printf "\n-----> Setting up git repo for transcrypt\n\n"
+git init . --quiet
 
 # Install transcrypt, its helper utils, and password/cipher
 printf "\n-----> Installing and configuring transcrypt\n\n"
