@@ -35,12 +35,15 @@ ls
 
 # It doesn't have git, so initialize
 printf "\n-----> Setting up git repo for transcrypt\n\n"
+set -x
 git init . --quiet
 git config --global user.email "foo@bar.com" > /dev/null
 git config --global user.name "Foo Bar" > /dev/null
 git add -A
+git status
 git reset .gitattributes
-git stash save > /dev/null
+git status
+git stash save
 git status
 exit 1
 git add .gitattributes
