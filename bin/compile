@@ -40,19 +40,13 @@ git config --global user.email "foo@bar.com" > /dev/null
 git config --global user.name "Foo Bar" > /dev/null
 git add -A > /dev/null
 git commit -m "Init" > /dev/null
+cat config/slack.enc.cr
 
 # Install transcrypt, its helper utils, and password/cipher
 printf "\n-----> Installing and configuring transcrypt\n\n"
 # Seems like it is not using the right cipher? Or maybe the salt is wrong??
 # Check into the salts
 $CACHE_DIR/transcrypt/$TRANSCRYPT_CMD
-
-git status
-git stash save
-rm .git/index
-git checkout HEAD -- "$(git rev-parse --show-toplevel)"
-git status
-# git stash pop
 
 printf "\n-----> ls-crypt\n\n"
 git ls-crypt
