@@ -51,6 +51,7 @@ tr '\n' '\0' | \
 xargs -0 -I {} find . -name {} | \
 while read file; do
   .git/crypt/smudge $file > $file.dec && mv $file.dec $file
+  ls config
 done
 
 printf "\n-----> ls-crypt\n\n"
