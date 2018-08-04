@@ -39,15 +39,10 @@ set -x
 git init . --quiet
 git config --global user.email "foo@bar.com" > /dev/null
 git config --global user.name "Foo Bar" > /dev/null
-git add -A
-git status
-git reset .gitattributes
-git status
-git stash save
-git status
-exit 1
 git add .gitattributes
-git commit -m "Init" > /dev/null
+git commit -m ".gitattributes" > /dev/null
+git add -A
+git stash
 cat config/slack.enc.cr
 
 # Install transcrypt, its helper utils, and password/cipher
