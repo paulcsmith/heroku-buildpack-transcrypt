@@ -38,9 +38,11 @@ printf "\n-----> Setting up git repo for transcrypt\n\n"
 git init . --quiet
 git config --global user.email "foo@bar.com" > /dev/null
 git config --global user.name "Foo Bar" > /dev/null
-git add -A > /dev/null
+git add -A
 git reset .gitattributes
-git stash save
+git stash save > /dev/null
+git status
+exit 1
 git add .gitattributes
 git commit -m "Init" > /dev/null
 cat config/slack.enc.cr
