@@ -51,7 +51,7 @@ tr '\n' '\0' | \
 xargs -0 -I {} find . -name {} | \
 while read file; do
     printf "\n-----> Did it encrypt $file?\n\n"
-    cat $file | .git/crypt/smudge
+    cat $file | .git/crypt/textconv
     #  > $file.dec && mv $file.dec $file
 done
 
@@ -59,7 +59,7 @@ printf "\n-----> ls-crypt\n\n"
 git ls-crypt
 
 printf "\n-----> Did it encrypt?\n\n"
-cat config/slack.enc.cr
-cat config/google_oauth.enc.cr
+# cat config/slack.enc.cr
+# cat config/google_oauth.enc.cr
 
 printf "\n-----> All transcrypted files decrypted!\n\n"
