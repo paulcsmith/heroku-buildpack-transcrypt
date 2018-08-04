@@ -59,5 +59,6 @@ git ls-crypt
 
 printf "\n-----> Did it encrypt?\n\n"
 cat config/slack.enc.cr
+cat config/google_oauth.enc.cr
 
 printf "\n-----> All transcrypted files decrypted!\n\n"
