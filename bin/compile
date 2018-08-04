@@ -47,8 +47,18 @@ git status
 printf "\n-----> Installing and configuring transcrypt\n\n"
 $CACHE_DIR/transcrypt/$TRANSCRYPT_CMD
 
+# git stash save
+# rm .git/index
+# git checkout HEAD -- "$(git rev-parse --show-toplevel)"
+# git stash pop
+
 rm .git/index
-git checkout HEAD -- "$(git rev-parse --show-toplevel)"
+
+# rescan index
+git reset HEAD -- .
+
+# checkout all the files which have a smudge filter on them
+git ls-files --modified | grep -v .gitattributes | awk '{print "git checkout HEAD -- \""$1"\""}' | bash
 
 printf "\n-----> ls-crypt\n\n"
 git ls-crypt
