@@ -51,9 +51,7 @@ tr '\n' '\0' | \
 xargs -0 -I {} find . -name {} | \
 while read file; do
     printf "\n-----> Did it encrypt $file?\n\n"
-    echo $file
-    cat $file
-    cat $file | .git/crypt/smudge
+    cat $file | .git/crypt/textconv
     #  > $file.dec && mv $file.dec $file
 done
 
