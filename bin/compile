@@ -47,6 +47,8 @@ git status
 printf "\n-----> Installing and configuring transcrypt\n\n"
 $CACHE_DIR/transcrypt/$TRANSCRYPT_CMD
 
+set -x
+
 git stash save
 rm .git/index
 git checkout HEAD -- "$(git rev-parse --show-toplevel)"
