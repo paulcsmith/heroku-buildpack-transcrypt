@@ -32,7 +32,6 @@ fi
 
 cd $BUILD_DIR
 ls
-exit 1
 
 # It doesn't have git, so initialize
 printf "\n-----> Setting up git repo for transcrypt\n\n"
@@ -47,6 +46,11 @@ git status
 # Install transcrypt, its helper utils, and password/cipher
 printf "\n-----> Installing and configuring transcrypt\n\n"
 $CACHE_DIR/transcrypt/$TRANSCRYPT_CMD
+
+git stash save
+rm .git/index
+git checkout HEAD -- "$(git rev-parse --show-toplevel)"
+git stash pop
 
 printf "\n-----> ls-crypt\n\n"
 git ls-crypt
