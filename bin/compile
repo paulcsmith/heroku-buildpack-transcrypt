@@ -36,29 +36,21 @@ ls
 # It doesn't have git, so initialize
 printf "\n-----> Setting up git repo for transcrypt\n\n"
 git init . --quiet
-git config --global user.email "foo@bar.com"
-git config --global user.name "Foo Bar"
-git add -A
-git commit -m "Init"
-printf "\n-----> Status \n\n"
-git status
+git config --global user.email "foo@bar.com" > /dev/null
+git config --global user.name "Foo Bar" > /dev/null
+git add -A > /dev/null
+git commit -m "Init" > /dev/null
 
 # Install transcrypt, its helper utils, and password/cipher
 printf "\n-----> Installing and configuring transcrypt\n\n"
 $CACHE_DIR/transcrypt/$TRANSCRYPT_CMD
 
-# git stash save
-# rm .git/index
-# git checkout HEAD -- "$(git rev-parse --show-toplevel)"
-# git stash pop
-
+git status
+git stash save
 rm .git/index
-
-# rescan index
-git reset HEAD -- .
-
-# checkout all the files which have a smudge filter on them
-git ls-files --modified | grep -v .gitattributes | awk '{print "git checkout HEAD -- \""$1"\""}' | bash
+git checkout HEAD -- "$(git rev-parse --show-toplevel)"
+git status
+git stash pop
 
 printf "\n-----> ls-crypt\n\n"
 git ls-crypt
