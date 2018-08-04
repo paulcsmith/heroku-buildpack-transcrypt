@@ -43,6 +43,8 @@ git commit -m "Init" > /dev/null
 
 # Install transcrypt, its helper utils, and password/cipher
 printf "\n-----> Installing and configuring transcrypt\n\n"
+# Seems like it is not using the right cipher? Or maybe the salt is wrong??
+# Check into the salts
 $CACHE_DIR/transcrypt/$TRANSCRYPT_CMD
 
 git status
