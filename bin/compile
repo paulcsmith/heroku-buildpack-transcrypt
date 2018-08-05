@@ -51,8 +51,7 @@ tr '\n' '\0' | \
 xargs -0 -I {} find . -name {} | \
 while read file; do
     printf "\n-----> Decrypting $file\n\n"
-    cat $file
-    # | .git/crypt/textconv
+    cat $file | .git/crypt/smudge
     # > $file.dec && mv $file.dec $file
 done
 
